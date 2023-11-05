@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+    
+	environment {
+            NODEJS_HOME = tool name: 'NodeJS'
+            PATH = "$NODEJS_HOME/bin:$PATH"
+        }
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'npm install'
+                sh 'npm run build'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
+        }
+    }
+}
